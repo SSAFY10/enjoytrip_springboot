@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.attraction.model.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 

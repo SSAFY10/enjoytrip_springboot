@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.attraction.model.dto;
 
+import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,5 +24,6 @@ public class AttractionInfoWithDistanceDto {
 	private double latitude;
 	private double longitude;
 	private String mlevel;
+	@ApiParam(value = "거리")
 	private double distance;
 }

@@ -32,7 +32,7 @@ public class SwaggerConfiguration {
 		return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
 					.apiInfo(apiInfo()).groupName(version).select()
 					.apis(RequestHandlerSelectors.basePackage("com.ssafy.enjoytrip"))
-					.paths(PathSelectors.ant("/**/Controller/**")).build()
+					.paths(PathSelectors.ant("/**/**")).build()
 					.useDefaultResponseMessages(false);
 	}
 	
