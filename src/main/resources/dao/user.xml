@@ -11,22 +11,22 @@
 	
 	<select id="searchAll" resultMap="user">
 		select *
-		from member
+		from user
 	</select>
 	
 	<select id="search" parameterType="String" resultMap="user">
 		select *
-		from member
+		from user
 		where user_id = #{userId}
 	</select>
 	
 	<insert id="insert" parameterType="user">
-		insert into member(user_id, user_password, user_phone, user_email)
+		insert into user(user_id, user_password, user_phone, user_email)
 		values (#{userId}, #{userPassword}, #{userPhone}, #{userEmail})
 	</insert>
 	
 	<update id="update" parameterType="user">
-		update member
+		update user
 		<trim prefix="set" suffixOverrides=",">
 			<if test="userPassword != null">user_password = #{userPassword},</if>
 			<if test="userPhone != null">user_phone = #{userPhone},</if>
@@ -36,7 +36,7 @@
 	</update>
 	
 	<delete id="delete" parameterType="String">
-		delete from member
+		delete from user
 		where user_id = #{userId}
 	</delete>
 	
