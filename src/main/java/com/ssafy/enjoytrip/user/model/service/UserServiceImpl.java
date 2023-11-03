@@ -9,8 +9,10 @@ import com.ssafy.enjoytrip.user.model.dto.User;
 import com.ssafy.enjoytrip.user.model.dto.UserException;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
 			if (user.getUserPassword().equals(userPassword)) {
 				return user;
 			} else {
+				log.debug(userPassword);
 				throw new UserException("아이디 또는 비밀번호 확인 후 다시 로그인하세요!");
 			}
 		}

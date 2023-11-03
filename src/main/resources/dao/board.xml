@@ -1,4 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ssafy.enjoytrip.board.model.dao.BoardDao"></mapper>
+<mapper namespace="com.ssafy.enjoytrip.board.model.dao.BoardDao">
+	<resultMap type="Board" id="board">
+		<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
+
+	<select id="searchAll" resultMap="board">
+		select *
+		from board
+	</select>
+	
+	<select id="search" parameterType="String" resultMap="board">
+		select *
+		from board
+		where article_no = #{articleNo}
+	</select>
+	
+	<insert id="write" parameterType="board">
+		insert into board(article_no, user_id, title, content, hit, register_time)
+		values (#{articleNo}, #{userId}, #{title}, #{content}, #{hit}, #{register_time})
+	</insert>
+	
+	<update id="modify" parameterType="board">
+		update board
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="hit != null">hit = #{hit},</if>
+			<if test="registerTime != null">register_time = #{registerTime},</if>
+			where article_no = #{articleNo}
+		</trim>
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from board
+		where article_no = #{articleNo}
+	</delete>
+
+</mapper>

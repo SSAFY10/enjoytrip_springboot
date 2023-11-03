@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@RequestMapping("/user/Controller")
+@RequestMapping("/user")
 @AllArgsConstructor
 @CrossOrigin(origins = {""})
 @Api(tags = {"User Contorller API"})
@@ -49,7 +49,6 @@ public class UserController {
 		if (user != null) {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		} else {
-			log.debug(user.getUserPassword());
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 	}
