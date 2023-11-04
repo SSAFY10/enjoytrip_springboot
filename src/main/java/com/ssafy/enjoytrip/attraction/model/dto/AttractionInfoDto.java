@@ -27,6 +27,7 @@ public class AttractionInfoDto {
 	private String firstImage;
 	@ApiParam(value = "이미지 파일2")
 	private String firstImage2;
+	@ApiParam(value = "readcount")
 	private int readcount;
 	@ApiParam(value = "시/도 코드")
 	private int sidoCode;
@@ -36,5 +37,6 @@ public class AttractionInfoDto {
 	private double latitude;
 	@ApiParam(value = "경도(세로선)")
 	private double longitude;
+	@ApiParam(value = "mlevel")
 	private String mlevel;
 }

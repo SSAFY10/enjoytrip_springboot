@@ -1,17 +1,26 @@
 package com.ssafy.enjoytrip.util;
 
-import java.util.Map;
+import io.swagger.annotations.ApiParam;
 
 public class PageNavigation {
 	
+	@ApiParam("현재 페이지가 이전이 눌려지지 않는 범위의 페이지 체크")
 	private boolean startRange; // 현재 페이지가 이전이 눌려지지 않는 범위의 페이지 체크
+	@ApiParam("현재 페이지가 다음이 눌려지지 않는 범위의 페이지 체크")
 	private boolean endRange; // 현재 페이지가 다음이 눌려지지 않는 범위의 페이지 체크
+	@ApiParam("총 게시글 갯수")
 	private int totalCount; // 총 게시글 갯수
+	@ApiParam("새글 갯수")
 	private int newCount; // 새글 갯수
+	@ApiParam("총 페이지 갯수")
 	private int totalPageCount; // 총 페이지 갯수
+	@ApiParam("현재 페이지 번호")
 	private int currentPage; // 현재 페이지 번호
+	@ApiParam("네비게이션 사이즈")
 	private int naviSize; // 네비게이션 사이즈
+	@ApiParam("페이지당 글 갯수")
 	private int countPerPage; // 페이지당 글 갯수
+	@ApiParam("페이징 버튼을 만드는 html 조각")
 	private String navigator;
 
 	public boolean isStartRange() {

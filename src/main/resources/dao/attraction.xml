@@ -30,76 +30,83 @@
 		<result column="gugun_name" property="gugunName"/>
 		<result column="sido_code" property="sidoCode"/>
 	</resultMap>
-
-	<select id="totalAttractionListCount" parameterType="AttractionInfoDto" resultMap="attractionInfo">
-		select count(*) 
-		from attraction_info
+	
+	<sql id="sidoGugunContentType">
 		<where>
 			<if test="sidoCode != 0">
-				sido_code = #{sidoCode}
+				AND sido_code = #{sidoCode}
 			</if>
 			<if test="gugunCode != 0">
-				gugun_code = #{gugunCode}
+				AND gugun_code = #{gugunCode}
 			</if>
 			<if test="contentTypeId != 0">
-				content_type_id = #{contentTypeId}
+				AND content_type_id = #{contentTypeId}
 			</if>
 		</where>
+	</sql>
+
+	<select id="totalAttractionListCount" parameterType="AttractionInfoDto" resultType="int">
+		SELECT 
+			count(*) 
+		FROM 
+			attraction_info
+		<include refid="sidoGugunContentType"/>
 	</select>
 	
 	<select id="search" parameterType="AttractionInfoDto" resultMap="attractionInfo">
-		select (
-			content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image
-			first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel)
-		from attraction_info
-		<where>
-			<if test="sidoCode != 0">
-				sido_code = #{sidoCode}
-			</if>
-			<if test="gugunCode != 0">
-				gugun_code = #{gugunCode}
-			</if>
-			<if test="contentTypeId != 0">
-				content_type_id = #{contentTypeId}
-			</if>
-		</where>
+		SELECT 
+			content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image,
+			first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
+		FROM 
+			attraction_info
+		<include refid="sidoGugunContentType"/>
 	</select>
 
-	<select id="searchWithPaging" parameterType="AttractionInfoDto" resultMap="attractionInfo">
-		select (
-			content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image
-			first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel)
-		from attraction_info
+	<select id="searchWithPaging" resultMap="attractionInfo">
+		SELECT 
+			content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image,
+			first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
+		FROM 
+			attraction_info
 		<where>
-			<if test="sidoCode != 0">
-				sido_code = #{sidoCode}
+			<if test="attractionInfoDto.sidoCode != 0">
+				AND sido_code = #{attractionInfoDto.sidoCode}
 			</if>
-			<if test="gugunCode != 0">
-				gugun_code = #{gugunCode}
+			<if test="attractionInfoDto.gugunCode != 0">
+				AND gugun_code = #{attractionInfoDto.gugunCode}
 			</if>
-			<if test="contentTypeId != 0">
-				content_type_id = #{contentTypeId}
+			<if test="attractionInfoDto.contentTypeId != 0">
+				AND content_type_id = #{attractionInfoDto.contentTypeId}
 			</if>
 		</where>
-		limit #{start}, {#sizePerPage}
+		LIMIT 
+			#{start}, #{sizePerPage}
 	</select>
 	
 	<select id="searchByTitle" resultMap="attractionInfo">
-		select (
-			content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image
-			first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel)
-		from attraction_info
-		where title like concat('%', #{title}, '%') and sido_code = #{sidoCode}
+		SELECT 
+			content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image,
+			first_image2, readcount, sido_code, gugun_code, latitude, longitude, mlevel
+		FROM 
+			attraction_info
+		WHERE 
+			title LIKE CONCAT('%', #{title}, '%') AND 
+			sido_code = #{sidoCode}
 	</select>
 	
 	<select id="searchAllSido" resultMap="sido">
-		select sido_code, sido_name
-		from sido
+		SELECT 
+			sido_code, sido_name
+		FROM 
+			sido
 	</select>
 	
 	<select id="searchGugunBySido" parameterType="int" resultMap="gugun">
-		select gugun_code, gugun_name, sido_code
-		from gugun
-		where sido_code = #{sidoCode}
+		SELECT 
+			gugun_code, gugun_name, sido_code
+		FROM 
+			gugun
+		WHERE 
+			sido_code = #{sidoCode}
 	</select>
 </mapper>

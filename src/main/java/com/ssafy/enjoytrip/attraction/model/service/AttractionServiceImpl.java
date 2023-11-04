@@ -53,19 +53,22 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	public List<AttractionInfoWithDistanceDto> sortByDistance(AttractionInfoDto attractionInfoDto, int distance) {
 		DtoConverter<AttractionInfoDto, AttractionInfoWithDistanceDto> converter = new DtoConverter<>();
-		return attractionDao.search(attractionInfoDto).parallelStream()
-				.filter(attraction -> (Haversine.getDistanceInMeter(attractionInfoDto.getLatitude(), attractionInfoDto.getLongitude(), attraction.getLatitude(), attraction.getLongitude())) <= distance)
+		double baseLatitude = attractionInfoDto.getLatitude();
+		double baseLongitude = attractionInfoDto.getLongitude();
+		
+		List<AttractionInfoDto> searchResult = attractionDao.search(attractionInfoDto);
+		
+		return searchResult.stream()
+				.parallel()
+				.filter(attraction -> Haversine.getDistanceInMeter(baseLatitude, baseLongitude, attraction.getLatitude(), attraction.getLongitude()) <= distance)
 				.map(attactionInfoDto -> converter.convert(attactionInfoDto, new AttractionInfoWithDistanceDto()))
-				.peek((attractionInfoWithDistanceDto) -> 
+				.peek(attractionInfoWithDistanceDto -> 
 					attractionInfoWithDistanceDto.setDistance(
 						Haversine.getDistanceInMeter(
-							attractionInfoDto.getLatitude(), 
-							attractionInfoDto.getLongitude(), 
+							baseLatitude, 
+							baseLongitude, 
 							attractionInfoWithDistanceDto.getLatitude(), 
-							attractionInfoWithDistanceDto.getLongitude()
-						)
-					)
-				)
+							attractionInfoWithDistanceDto.getLongitude())))
 				.sorted((attraction, anotherAttraction) -> Double.compare(attraction.getDistance(), anotherAttraction.getDistance()))
 				.collect(Collectors.toList());
 	}
