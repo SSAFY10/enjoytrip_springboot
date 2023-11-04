@@ -23,8 +23,8 @@
 	</select>
 	
 	<insert id="write" parameterType="board">
-		insert into board(article_no, user_id, title, content, hit, register_time)
-		values (#{articleNo}, #{userId}, #{title}, #{content}, #{hit}, #{register_time})
+		insert into board(article_no, user_id, title, content, hit)
+		values (#{articleNo}, #{userId}, #{title}, #{content}, #{hit})
 	</insert>
 	
 	<update id="modify" parameterType="board">

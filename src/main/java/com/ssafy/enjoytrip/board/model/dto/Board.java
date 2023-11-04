@@ -14,9 +14,9 @@ import lombok.ToString;
 @ToString
 public class Board {
 	@ApiParam(value="게시글 번호")
-	String article_no;
+	String articleNo;
 	@ApiParam(value="작성자 아이디")
-	String user_id;
+	String userId;
 	@ApiParam(value="게시글 제목")
 	String title;
 	@ApiParam(value="게시글 내용")
@@ -24,5 +24,5 @@ public class Board {
 	@ApiParam(value="조회수")
 	String hit;
 	@ApiParam(value="작성시간")
-	String register_time;
+	String registerTime;
 }
