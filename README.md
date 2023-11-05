@@ -33,4 +33,20 @@
 TODO: 요구사항 목록에서 완료 처리된 기능을 Swagger로 테스트한 결과를 캡쳐하여 이미지를 등록하세요.
 
 구현 기능: BackEnd(SpringMVC(RestController), Model(Dao, Service, Dto))
-![실행화면캡쳐](./화면캡쳐/화면캡쳐_0001_주택정보_web.png)
+
+![구/군 목록](./image/attraction/attraction_gugun.png)
+![구/군 목록](./image/attraction/attraction_list.png)
+![구/군 목록](./image/attraction/attraction_sido.png)
+![구/군 목록](./image/attraction/attraction_sort.png)
+
+![게시판 삭제](./image/board/board_delete.png)
+![게시판 수정](./image/board/board_modify.png)
+![게시판 검색](./image/board/board_search.png)
+![게시판 전체 검색](./image/board/board_searchAll.png)
+![게시판 등록](./image/board/board_write.png)
+
+![사용자 탈퇴](./image/user/user_delete.png)
+![사용자 로그인](./image/user/user_login.png)
+![사용자 로그아웃](./image/user/user_logout.png)
+![사용자 등록](./image/user/user_post.png)
+![사용자 정보 수정](./image/user/user_put.png)
