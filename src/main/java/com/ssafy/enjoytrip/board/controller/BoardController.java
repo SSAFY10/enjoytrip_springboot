@@ -48,8 +48,8 @@ public class BoardController {
 	@ApiOperation(value = "조회", notes = "해당 게시글 조회")
 	@ApiResponse(code = 200, message = SUCCESS)
 	@GetMapping("/search")
-	public ResponseEntity<Board> serach(String articelNo) {
-		Board board = service.serach(articelNo);
+	public ResponseEntity<Board> serach(String articleNo) {
+		Board board = service.search(articleNo);
 		return new ResponseEntity<Board>(board, HttpStatus.OK);
 	}
 

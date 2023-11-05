@@ -6,7 +6,7 @@ import com.ssafy.enjoytrip.board.model.dto.Board;
 
 public interface BoardService {
 	public List<Board> searchAll();
-	public Board serach(String articelNo);
+	public Board search(String articleNo);
 	public void write(Board board);
 	public void modify(Board board);
 	public void delete(String articleNo);

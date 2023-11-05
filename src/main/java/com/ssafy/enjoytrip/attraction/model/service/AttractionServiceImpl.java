@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.attraction.model.dao.AttractionDao;
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class AttractionServiceImpl implements AttractionService {
+	
 	private final AttractionDao attractionDao;
 	
 	@Override
@@ -36,7 +38,7 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 	
 	@Override
-	public List<AttractionInfoDto> searchWithPaging(AttractionInfoDto attractionInfoDto, PageNavigation pageNavigation) {
+	public List<AttractionInfoDto> search(AttractionInfoDto attractionInfoDto, PageNavigation pageNavigation) {
 		int currentPage = pageNavigation.getCurrentPage();
 		int sizePerPage = SizeConstant.LIST_SIZE;
 		

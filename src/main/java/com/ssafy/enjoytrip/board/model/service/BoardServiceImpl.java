@@ -23,8 +23,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board serach(String articelNo) {
-		return dao.serach(articelNo);
+	public Board search(String articleNo) {
+		return dao.search(articleNo);
 	}
 
 	@Override

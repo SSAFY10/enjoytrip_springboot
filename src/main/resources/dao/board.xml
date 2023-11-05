@@ -23,8 +23,8 @@
 	</select>
 	
 	<insert id="write" parameterType="board">
-		insert into board(article_no, user_id, title, content, hit)
-		values (#{articleNo}, #{userId}, #{title}, #{content}, #{hit})
+		insert into board(user_id, title, content)
+		values (#{userId}, #{title}, #{content})
 	</insert>
 	
 	<update id="modify" parameterType="board">
@@ -35,8 +35,8 @@
 			<if test="content != null">content = #{content},</if>
 			<if test="hit != null">hit = #{hit},</if>
 			<if test="registerTime != null">register_time = #{registerTime},</if>
-			where article_no = #{articleNo}
 		</trim>
+		where article_no = #{articleNo}
 	</update>
 	
 	<delete id="delete" parameterType="String">

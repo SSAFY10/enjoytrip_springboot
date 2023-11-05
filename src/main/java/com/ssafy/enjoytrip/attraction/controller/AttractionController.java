@@ -184,7 +184,7 @@ public class AttractionController {
 		
 		int totalCount = attractionService.totalAttractionListCount(attractionInfoDto);
 		PageNavigation pageNavigation = PageNavigation.makePageNavigation(totalCount, pageNo, "/find/" + pageNo);
-		List<AttractionInfoDto> attractionList = attractionService.searchWithPaging(attractionInfoDto, pageNavigation);
+		List<AttractionInfoDto> attractionList = attractionService.search(attractionInfoDto, pageNavigation);
 		
 		if (attractionList != null && !attractionList.isEmpty()) {
 			Map<String, Object> response = new HashMap<>();

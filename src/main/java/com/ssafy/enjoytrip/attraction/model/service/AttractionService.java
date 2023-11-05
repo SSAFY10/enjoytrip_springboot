@@ -22,5 +22,5 @@ public interface AttractionService {
 
 	List<GugunDto> searchGugunBySido(int sidoCode);
 
-	List<AttractionInfoDto> searchWithPaging(AttractionInfoDto attractionInfoDto, PageNavigation pageNavigation);
+	List<AttractionInfoDto> search(AttractionInfoDto attractionInfoDto, PageNavigation pageNavigation);
 }
