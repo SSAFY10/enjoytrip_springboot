@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.enjoytrip.board.model.dao.QnaBoardDao">
+	<resultMap type="QnaBoard" id="qnaBoard">
+		<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/>
+		<result column="question_article_no" property="questionArticleNo"/>
+	</resultMap>
+
+	<select id="searchAll" resultMap="qnaBoard">
+		select *
+		from qna_board
+	</select>
+	
+	<select id="searchByArticleNo" parameterType="int" resultMap="qnaBoard">
+		select *
+		from qna_board
+		where article_no = #{articleNo}
+	</select>
+	
+	<select id="searchByQuestionArticleNo" parameterType="int" resultMap="qnaBoard">
+		select *
+		from qna_board
+		where question_article_no = #{questionArticleNo}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from board
+		where article_no = #{articleNo}
+	</delete>
+
+</mapper>
