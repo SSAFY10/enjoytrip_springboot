@@ -22,7 +22,7 @@
 		where article_no = #{articleNo}
 	</select>
 	
-	<insert id="write" parameterType="board">
+	<insert id="write" parameterType="board" useGeneratedKeys="true" keyColumn="article_no" keyProperty="articleNo">
 		insert into board(user_id, title, content)
 		values (#{userId}, #{title}, #{content})
 	</insert>

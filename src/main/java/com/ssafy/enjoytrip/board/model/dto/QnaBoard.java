@@ -9,8 +9,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class QnaBoard {
-	@ApiParam(value="게시글 번호")
-	String articleNo;
+	@ApiParam(value="게시글")
+	Board board;
 	@ApiParam(value = "질문 게시글 번호")
 	int questionArticleNo;
 }
