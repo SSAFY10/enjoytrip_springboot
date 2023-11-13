@@ -23,7 +23,7 @@
 		    (article_no)
 	</select>
 
-	<select id="searchList" parameterType="int" resultMap="qnaBoard">
+	<select id="searchList" resultMap="qnaBoard">
 		SELECT
 		    article_no, question_article_no, user_id, title, content, hit, register_time
 		FROM
@@ -34,7 +34,7 @@
 		    #{start}, #{sizePerPage}
 	</select>
 
-	<select id="searchAnswerBoard" resultMap="qnaBoard" parameterType="int">
+	<select id="searchAnswerBoard" resultMap="qnaBoard">
 		SELECT
 		    article_no, question_article_no, user_id, title, content, hit, register_time
 		FROM
@@ -51,7 +51,7 @@
 		</where>
 	</select>
 	
-	<select id="searchQuestionBoard" resultMap="qnaBoard" parameterType="int">
+	<select id="searchQuestionBoard" resultMap="qnaBoard">
 		SELECT
 		    b.article_no, q.question_article_no, user_id, title, content, hit, register_time
 		FROM
@@ -60,7 +60,7 @@
 	  	    (q.question_article_no = b.article_no)
 		<where>
 			<if test="articleNo > 0">
-				AND b.article_no = #{articleNo}
+				AND q.article_no = #{articleNo}
 			</if>
 			<if test="questionArticleNo > 0">
 				AND question_article_no = #{questionArticleNo}
@@ -68,7 +68,7 @@
 		</where>
 	</select>
 
-	<insert id="registAnswer" parameterType="int">
+	<insert id="registAnswer">
 		INSERT INTO qna_board (article_no, question_article_no)
 		VALUES (#{articleNo}, #{questionArticleNo})
 	</insert>
