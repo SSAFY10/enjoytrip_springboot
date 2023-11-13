@@ -3,35 +3,74 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.enjoytrip.board.model.dao.QnaBoardDao">
 	<resultMap type="QnaBoard" id="qnaBoard">
-		<result column="article_no" property="articleNo"/>
-		<result column="user_id" property="userId"/>
-		<result column="title" property="title"/>
-		<result column="content" property="content"/>
-		<result column="hit" property="hit"/>
-		<result column="register_time" property="registerTime"/>
 		<result column="question_article_no" property="questionArticleNo"/>
+		<association column="article_no" property="board">
+			<id column="article_no" property="articleNo"/>
+			<result column="user_id" property="userId"/>
+			<result column="title" property="title"/>
+			<result column="content" property="content"/>
+			<result column="hit" property="hit"/>
+			<result column="register_time" property="registerTime"/>
+		</association>
 	</resultMap>
 
-	<select id="searchAll" resultMap="qnaBoard">
-		select *
-		from qna_board
+	<select id="totalQnaBoardCount" resultType="int">
+		SELECT
+		    count(*)
+		FROM
+		    qna_board JOIN board
+		USING
+		    (article_no)
+	</select>
+
+	<select id="searchList" parameterType="int" resultMap="qnaBoard">
+		SELECT
+		    article_no, question_article_no, user_id, title, content, hit, register_time
+		FROM
+		    qna_board JOIN board
+		USING
+		    (article_no)
+		LIMIT
+		    #{start}, #{sizePerPage}
+	</select>
+
+	<select id="searchAnswerBoard" resultMap="qnaBoard" parameterType="int">
+		SELECT
+		    article_no, question_article_no, user_id, title, content, hit, register_time
+		FROM
+		    qna_board JOIN board
+		USING
+		    (article_no)
+		<where>
+			<if test="articleNo > 0">
+				AND article_no = #{articleNo}
+			</if>
+			<if test="questionArticleNo > 0">
+				AND question_article_no = #{questionArticleNo}
+			</if>
+		</where>
 	</select>
 	
-	<select id="searchByArticleNo" parameterType="int" resultMap="qnaBoard">
-		select *
-		from qna_board
-		where article_no = #{articleNo}
+	<select id="searchQuestionBoard" resultMap="qnaBoard" parameterType="int">
+		SELECT
+		    b.article_no, q.question_article_no, user_id, title, content, hit, register_time
+		FROM
+		    qna_board q JOIN board b
+	  	ON
+	  	    (q.question_article_no = b.article_no)
+		<where>
+			<if test="articleNo > 0">
+				AND b.article_no = #{articleNo}
+			</if>
+			<if test="questionArticleNo > 0">
+				AND question_article_no = #{questionArticleNo}
+			</if>
+		</where>
 	</select>
-	
-	<select id="searchByQuestionArticleNo" parameterType="int" resultMap="qnaBoard">
-		select *
-		from qna_board
-		where question_article_no = #{questionArticleNo}
-	</select>
-	
-	<delete id="delete" parameterType="int">
-		delete from board
-		where article_no = #{articleNo}
-	</delete>
+
+	<insert id="registAnswer" parameterType="int">
+		INSERT INTO qna_board (article_no, question_article_no)
+		VALUES (#{articleNo}, #{questionArticleNo})
+	</insert>
 
 </mapper>
