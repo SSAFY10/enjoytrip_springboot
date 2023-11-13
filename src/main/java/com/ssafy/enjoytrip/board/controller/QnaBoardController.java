@@ -26,7 +26,7 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/qnaboard")
 @RequiredArgsConstructor
-@CrossOrigin(origins = { "" })
+@CrossOrigin(origins = { "*" })
 @Api(tags = { "QnaBoard Controller API" })
 public class QnaBoardController {
 	private final QnaBoardService qnaBoardService;
@@ -62,7 +62,7 @@ public class QnaBoardController {
 				.body(null);
 	}
 
-	@GetMapping("/view/{questionArticleNo}")
+	@GetMapping("/{questionArticleNo}")
 	public ResponseEntity<?> detailQnaBoard(@PathVariable int questionArticleNo) {
 		QuestionAndAnswerDto result = qnaBoardService.detailQnaBoard(questionArticleNo);
 		if (result != null) {

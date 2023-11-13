@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/board")
 @AllArgsConstructor
-@CrossOrigin(origins = { "" })
+@CrossOrigin(origins = { "*" })
 @Api(tags = { "Board Contorller API" })
 public class BoardController {
 
