@@ -16,7 +16,10 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
@@ -75,11 +78,16 @@ public class QnaBoardController {
 				.body(null);
 	}
 
-	@PostMapping("/write/Question")
-	public ResponseEntity<Board> writeQuestionBoard(Board board) {
+	@PostMapping("/write/question")
+	public ResponseEntity<Board> writeQuestionBoard(Board board, HttpServletRequest request) {
 		return ResponseEntity
 				.status(HttpStatus.TEMPORARY_REDIRECT)
-				.location(URI.create("/board/write"))
+				.location(ServletUriComponentsBuilder
+						.fromContextPath(request)
+						.path("/board")
+						.path("/write")
+						.build()
+						.toUri())
 				.body(board);
 	};
 
