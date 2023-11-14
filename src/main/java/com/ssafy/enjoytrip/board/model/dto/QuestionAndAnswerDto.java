@@ -1,6 +1,12 @@
 package com.ssafy.enjoytrip.board.model.dto;
 
-import lombok.*;
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -9,5 +15,5 @@ import lombok.*;
 @AllArgsConstructor
 public class QuestionAndAnswerDto {
     QnaBoard question;
-    QnaBoard answer;
+    List<QnaBoard> answer;
 }

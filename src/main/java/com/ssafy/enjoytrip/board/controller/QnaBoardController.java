@@ -1,29 +1,30 @@
 package com.ssafy.enjoytrip.board.controller;
 
-import com.ssafy.enjoytrip.board.model.dto.Board;
-import com.ssafy.enjoytrip.board.model.dto.QnaBoard;
-import com.ssafy.enjoytrip.board.model.dto.QuestionAndAnswerDto;
-import com.ssafy.enjoytrip.util.Page;
-import com.ssafy.enjoytrip.util.PageNavigation;
-import org.springframework.http.HttpRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.enjoytrip.board.model.dto.QnaBoard;
+import com.ssafy.enjoytrip.board.model.dto.QuestionAndAnswerDto;
 import com.ssafy.enjoytrip.board.model.service.QnaBoardService;
+import com.ssafy.enjoytrip.util.PageNavigation;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -33,7 +34,6 @@ import java.util.Map;
 @Api(tags = { "QnaBoard Controller API" })
 public class QnaBoardController {
 	private final QnaBoardService qnaBoardService;
-	private static final String SUCCESS = "success";
 
 	@ExceptionHandler
 	private ResponseEntity<String> exceptionHandling(Exception e) {
@@ -46,16 +46,14 @@ public class QnaBoardController {
 
 	@GetMapping
 	public ResponseEntity<?> list(int pageNo) {
-		int totalCount = qnaBoardService.totalQnaBoardCount();
+		int totalCount = qnaBoardService.totalQuestionCount();
 		PageNavigation pageNavigation = PageNavigation.makePageNavigation(totalCount, pageNo, "");
-
-		List<QnaBoard> qnaBoards = qnaBoardService.getList(pageNavigation);
-
+		List<QnaBoard> qnaBoards = qnaBoardService.questionList(pageNavigation);
+		
 		if (qnaBoards != null && qnaBoards.size() > 0) {
 			Map<String, Object> result = new HashMap<>();
 			result.put("qnaBoards", qnaBoards);
 			result.put("pageNavigation", pageNavigation);
-
 			return ResponseEntity
 					.status(HttpStatus.OK)
 					.body(result);
@@ -79,24 +77,23 @@ public class QnaBoardController {
 	}
 
 	@PostMapping("/write/question")
-	public ResponseEntity<Board> writeQuestionBoard(Board board, HttpServletRequest request) {
+	public ResponseEntity<?> writeQuestionBoard(@RequestBody QnaBoard qnaBoard) {
+		if (qnaBoardService.writeQuestion(qnaBoard) == 1) {
+			return ResponseEntity
+					.status(HttpStatus.CREATED)
+					.body(qnaBoard.getArticleNo());
+		}
 		return ResponseEntity
-				.status(HttpStatus.TEMPORARY_REDIRECT)
-				.location(ServletUriComponentsBuilder
-						.fromContextPath(request)
-						.path("/board")
-						.path("/write")
-						.build()
-						.toUri())
-				.body(board);
+				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(null);
 	};
 
 	@PostMapping("/write/answer")
-	public ResponseEntity<Void> writeAnswerBoard(QnaBoard qnaBoard) {
-		if (qnaBoardService.writeAnswerBoard(qnaBoard) == 1) {
+	public ResponseEntity<?> writeAnswerBoard(@RequestBody QnaBoard qnaBoard) {
+		if (qnaBoardService.writeAnswer(qnaBoard) == 1) {
 			return ResponseEntity
 					.status(HttpStatus.CREATED)
-					.body(null);
+					.body(qnaBoard.getArticleNo());
 		}
 		return ResponseEntity
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -104,18 +101,26 @@ public class QnaBoardController {
 	}
 
 	@PutMapping("/modify")
-	public ResponseEntity<Board> modify(Board board) {
+	public ResponseEntity<?> modify(@RequestBody QnaBoard qnaBoard) {
+		if (qnaBoardService.modify(qnaBoard) == 1) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(qnaBoard.getArticleNo());
+		}
 		return ResponseEntity
-				.status(HttpStatus.TEMPORARY_REDIRECT)
-				.location(URI.create("/board/modify"))
-				.body(board);
+				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(null);
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<Integer> delete(int articleNo) {
+	public ResponseEntity<?> delete(int articleNo) {
+		if (qnaBoardService.delete(articleNo) == 1) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(null);
+		}
 		return ResponseEntity
-				.status(HttpStatus.TEMPORARY_REDIRECT)
-				.location(URI.create("/board/delete"))
-				.body(articleNo);
+				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(null);
 	}
 }
