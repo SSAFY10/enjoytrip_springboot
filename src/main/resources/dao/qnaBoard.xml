@@ -76,6 +76,8 @@
 				content = #{content},
 			</if>
 		</trim>
+		WHERE
+		    article_no = #{articleNo}
 	</update>
 	
 	<delete id="delete">
