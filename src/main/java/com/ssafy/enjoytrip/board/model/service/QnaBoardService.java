@@ -8,8 +8,11 @@ import com.ssafy.enjoytrip.board.model.dto.QuestionAndAnswerDto;
 import com.ssafy.enjoytrip.util.PageNavigation;
 
 public interface QnaBoardService {
-	int totalQnaBoardCount();
-	List<QnaBoard> getList(PageNavigation pageNavigation);
+	int totalQuestionCount();
+	List<QnaBoard> questionList(PageNavigation pageNavigation);
 	QuestionAndAnswerDto detailQnaBoard(int articleNo);
-	int writeAnswerBoard(QnaBoard answerBoard);
+	int writeQuestion(QnaBoard qnaBoard);
+	int writeAnswer(QnaBoard qnaBoard);
+	int modify(QnaBoard qnaBoard);
+	int delete(int articleNo);
 }

@@ -8,10 +8,12 @@ import com.ssafy.enjoytrip.board.model.dto.QnaBoard;
 
 @Mapper
 public interface QnaBoardDao {
-	int totalQnaBoardCount();
-	List<QnaBoard> searchList(int start, int sizePerPage);
-	QnaBoard searchQuestionBoard(int articleNo, int questionArticleNo);
-	QnaBoard searchAnswerBoard(int articleNo, int questionArticleNo);
-	void delete(int articleNo);
-	int registAnswer(int articleNo, int questionArticleNo);
+	int totalQuestionCount();
+	List<QnaBoard> questionList(int start, int sizePerPage);
+	QnaBoard searchQuestionBoard(int articleNo);
+	List<QnaBoard> searchAnswerBoard(int questionArticleNo);
+	int registQuestion(QnaBoard qnaBoard);
+	int registAnswer(QnaBoard qnaBoard);
+	int modify(QnaBoard qnaBoard);
+	int delete(int articleNo);
 }
